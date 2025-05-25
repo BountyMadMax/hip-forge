@@ -8,7 +8,11 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Home() templ.Component {
+import (
+	"hip-forge/src/models"
+)
+
+func Home(accounts []models.Account) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,7 +33,17 @@ func Home() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"w-200 flex flex-col gap-4 py-8 h-fit\"><div class=\"flex justify-end\"><button class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-plus\"></i> <span>Account</span></button></div><ul class=\"grid gap-2\"><li class=\"border-2 border-rose-700 rounded flex flex-col\"><div class=\"border-b-2 border-rose-700 py-2 px-16 relative\"><h2 class=\"font-bold text-xl\"><input type=\"text\" placeholder=\"Name\" class=\"w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0 text-center\"></h2><button class=\"absolute border-2 top-2 right-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-save\"></i></button></div><div class=\"p-4 flex flex-col gap-4\"><div><label class=\"grid grid-rows-1 grid-cols-[min-content_auto] gap-2\"><span class=\"select-none text-nowrap\">Auth-API-Token</span> <span class=\"flex gap-2\"><input type=\"text\" placeholder=\"Token\" class=\"w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0\"> <button class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-eye\"></i></button> <button class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-save\"></i></button></span></label></div><div class=\"flex flex-col gap-4\"><div class=\"flex justify-end\"><button class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-plus\"></i> <span>Domain</span></button></div><table class=\"w-full border-collapse table-fixed\"><thead><tr><th class=\"border-2 border-rose-700 p-1 w-95 text-center\">Domain</th><th class=\"border-2 border-rose-700 p-1 w-50 text-center\">Resolves to</th><th class=\"border-2 border-rose-700 p-1 text-center\">Actions</th></tr></thead> <tbody><tr><td class=\"border-2 border-rose-700 py-1 px-2\"><input type=\"text\" placeholder=\"Domain\" class=\"w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0\"></td><td class=\"border-2 border-rose-700 py-1 px-2\">100.100.100.100</td><td class=\"border-2 border-rose-700 p-1 w-fit\"><div class=\"flex gap-2 w-fit ml-auto\"><button class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-save\"></i></button> <button class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-refresh-cw\"></i></button> <button class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-trash\"></i></button></div></td></tr></tbody></table></div></div></li></ul></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"w-200 flex flex-col gap-4 py-8 h-fit\"><div class=\"flex justify-end\"><button hx-post=\"/accounts\" hx-target=\"next ul\" hx-swap=\"beforeend\" class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-plus\"></i> <span>Account</span></button></div><ul class=\"grid gap-4\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, account := range accounts {
+			templ_7745c5c3_Err = Account(account).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</ul></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

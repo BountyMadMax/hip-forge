@@ -1,0 +1,107 @@
+package pages
+
+import (
+  "hip-forge/src/models"
+)
+
+templ DnsRecordTable(dnsRecords []models.DNSRecord) {
+  <div>
+    <ol class="grid grid-rows-1 grid-cols-[min-content_min-content_auto] border-b-2 border-rose-900">
+      <li class="w-95">Domain</li>
+      <li class="w-70">Resolves to</li>
+      <li></li>
+    </ol>
+    <ul class="dns-record-list">
+      for _, record := range dnsRecords {
+        @DnsRecordRow(record)
+      }
+    </ul>
+  </div>
+  // <table class="w-full border-collapse table-fixed">
+  //   <thead>
+  //     <tr>
+  //       <th class="border-2 border-rose-900 p-1 w-95 text-center text-zinc-200">Domain</th>
+  //       <th class="border-2 border-rose-900 p-1 w-70 text-center text-zinc-200">Resolves to</th>
+  //       <th class="border-2 border-rose-900 p-1 text-center text-zinc-200">Actions</th>
+  //     </tr>
+  //   </thead>
+  //   <tbody>
+  //     for _, record := range dnsRecords {
+  //       @DnsRecordRow(record)
+  //     }
+  //   </tbody>
+  // </table>
+}
+
+templ DnsRecordRow(dnsRecord models.DNSRecord) {
+  <li class="pt-2">
+    <form>
+      <ol class="grid grid-rows-1 grid-cols-[min-content_min-content_auto]">
+        <li class="w-95">
+          <input
+            type="text"
+            placeholder="Domain"
+            name="domain"
+            value={ dnsRecord.Name }
+            class="w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0"
+          />
+        </li>
+        <li class="w-70">
+          { dnsRecord.Value }
+        </li>
+        <li class="flex gap-2">
+          <button
+            type="submit"
+            class="border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
+          >
+            <i class="icon-save"></i>
+          </button>
+          <button
+            type="button"
+            class="border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
+          >
+            <i class="icon-refresh-cw"></i>
+          </button>
+          <button
+            type="button"
+            class="border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
+          >
+            <i class="icon-trash"></i>
+          </button>
+        </li>
+      </ol>
+    </form>
+  </li>
+  // <tr>
+  //   <form>
+  //     <td class="border-2 border-rose-900 py-1 px-2">
+  //       <input
+  //         type="text"
+  //         placeholder="Domain"
+  //         name="domain"
+  //         value={ dnsRecord.Name }
+  //         class="w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0"
+  //       />
+  //     </td>
+  //     <td class="border-2 border-rose-900 py-1 px-2">
+  //       { dnsRecord.Value }
+  //     </td>
+  //     <td class="border-2 border-rose-900 p-1">
+  //       <div class="flex gap-2 justify-center">
+  //         <button
+  //           type="button"
+  //           class="border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
+  //         >
+  //           <i class="icon-refresh-cw"></i>
+  //         </button>
+  //         <button
+  //           type="button"
+  //           class="border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
+  //         >
+  //           <i class="icon-trash"></i>
+  //         </button>
+  //       </div>
+  //     </td>
+  //   </form>
+  // </tr>
+}

@@ -1,0 +1,97 @@
+package pages
+
+import (
+  "hip-forge/src/models"
+)
+
+templ Account(account models.Account) {
+  <li class="border-2 border-rose-900 rounded">
+    <form class="flex flex-col" action="/accounts/new" method="post" hx-target="this">
+      <div class="border-b-2 border-rose-900 py-2 px-16 relative">
+        <h2 class="font-bold text-xl">
+          <input
+            type="text"
+            placeholder="Name"
+            required
+            value={ account.Name }
+            class="w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0 text-center"
+          />
+        </h2>
+        <button
+          type="submit"
+          class="absolute border-2 top-2 right-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
+        >
+          <i class="icon-save"></i>
+        </button>
+      </div>
+      <div class="p-2">
+        <label class="grid grid-rows-1 grid-cols-[min-content_auto] gap-2">
+          <span class="select-none text-nowrap">
+            Auth-API-Token
+          </span>
+          @AccountTokenInput(account.Token, true)
+        </label>
+      </div>
+    </form>
+    <div class="flex flex-col gap-2 p-2">
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
+          hx-target="next .dns-record-list"
+          hx-post="/records"
+          hx-swap="beforeend"
+        >
+          <i class="icon-plus"></i>
+          <span>Domain</span>
+        </button>
+      </div>
+
+      @DnsRecordTable(account.DNSRecords)
+    </div>
+  </li>
+}
+
+templ AccountTokenInput(token string, hideToken bool) {
+  <span class="flex gap-2">
+    if hideToken {
+      <span class="w-full">
+        <input
+          type="password"
+          placeholder="Token"
+          required
+          name="token"
+          value={ token }
+          class="w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0"
+        />
+        <input type="hidden" value={ hideToken } name="hidden"/>
+      </span>
+    } else {
+      <span class="w-full">
+        <input
+          type="text"
+          placeholder="Token"
+          name="token"
+          required
+          value={ token }
+          class="w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0"
+        />
+        <input type="hidden" value={ hideToken } name="hidden"/>
+      </span>
+    }
+    <button
+      type="button"
+      hx-post="/accounts/toggle-token-input"
+      hx-target="closest span"
+      hx-include="[name='token'],[name='hidden']"
+      hx-swap="outerHTML"
+      class="border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
+    >
+      if hideToken {
+        <i class="icon-eye"></i>
+      } else {
+        <i class="icon-eye-off"></i>
+      }
+    </button>
+  </span>
+}
