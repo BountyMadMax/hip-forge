@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.5",
+    "@tailwindcss/cli": "^4.1.7",
+    "htmx.org": "^2.0.4",
+    "lucide-static": "^0.511.0",
+    "tailwindcss": "^4.1.7"
+  }
+}
