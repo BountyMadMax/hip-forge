@@ -2,9 +2,13 @@
 
 A DDNS service for Hetzner.
 
-### Development
+## Development
 
-#### Run Server
+#### Stack
+
+[Echo](https://echo.labstack.com/) - [templ](https://templ.guide/) - [htmx](https://htmx.org/) - [tailwindcss](https://tailwindcss.com/)
+
+### Run Server
 
 `air`
 
