@@ -10,3 +10,5 @@ tmp
 # Database
 db/*.db
 
+# Private
+.env
