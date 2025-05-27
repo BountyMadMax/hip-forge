@@ -79,7 +79,7 @@ func DnsRecordRow(dnsRecord models.DNSRecord) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(dnsRecord.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/dns_record.templ`, Line: 45, Col: 34}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/dns_record.templ`, Line: 31, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -92,7 +92,7 @@ func DnsRecordRow(dnsRecord models.DNSRecord) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(dnsRecord.Value)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/dns_record.templ`, Line: 50, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/dns_record.templ`, Line: 36, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
