@@ -27,6 +27,7 @@ func (ht *HetznerTime) UnmarshalJSON(b []byte) error {
 
 	layouts := []string{
 		"2006-01-02 15:04:05.000 -0700 MST",
+		"2006-01-02 15:04:05.00 -0700 MST",
 		time.RFC3339Nano,
 		time.RFC3339,
 		"2006-01-02T15:04:05.000Z",
