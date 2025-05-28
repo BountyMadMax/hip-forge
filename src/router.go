@@ -24,8 +24,19 @@ func Router(e *echo.Echo) {
 		return controllers.RecordNew(c)
 	})
 
+	e.GET("/records", func(c echo.Context) error {
+		return controllers.Records(c)
+	})
+
 	e.POST("/accounts/toggle-token-input", func(c echo.Context) error {
 		return controllers.AccountToggleTokenInput(c)
+	})
+	e.POST("/accounts/token-changed", func(c echo.Context) error {
+		return controllers.AccountTokenChanged(c)
+	})
+
+	e.GET("/zones", func(c echo.Context) error {
+		return controllers.Zones(c)
 	})
 }
 

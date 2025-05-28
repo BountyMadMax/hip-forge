@@ -4,22 +4,26 @@ import (
   "hip-forge/src/models"
 )
 
-templ DnsRecordTable(dnsRecords []models.DNSRecord) {
+templ RecordTable(records []models.Record) {
   <div>
     <ol class="grid grid-rows-1 grid-cols-[min-content_min-content_auto] border-b-2 border-rose-900">
       <li class="w-95">Domain</li>
       <li class="w-70">Resolves to</li>
       <li></li>
     </ol>
-    <ul class="dns-record-list">
-      for _, record := range dnsRecords {
-        @DnsRecordRow(record)
-      }
-    </ul>
+    @RecordRows(records)
   </div>
 }
 
-templ DnsRecordRow(dnsRecord models.DNSRecord) {
+templ RecordRows(records []models.Record) {
+  <ul class="record-list">
+    for _, record := range records {
+      @RecordRow(record)
+    }
+  </ul>
+}
+
+templ RecordRow(record models.Record) {
   <li class="pt-2">
     <form>
       <ol class="grid grid-rows-1 grid-cols-[min-content_min-content_auto]">
@@ -28,12 +32,12 @@ templ DnsRecordRow(dnsRecord models.DNSRecord) {
             type="text"
             placeholder="Domain"
             name="domain"
-            value={ dnsRecord.Name }
+            value={ record.Name }
             class="w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0"
           />
         </li>
         <li class="w-70">
-          { dnsRecord.Value }
+          { record.Value }
         </li>
         <li class="flex gap-2">
           <button

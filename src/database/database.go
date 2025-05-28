@@ -22,6 +22,9 @@ func OpenDatabase() *gorm.DB {
 func migrate(db *gorm.DB) {
 	db.AutoMigrate(
 		&models.Account{},
-		&models.DNSRecord{},
+		&models.Record{},
+		&models.Zone{},
+		&models.ZoneType{},
+		&models.Nameserver{},
 	)
 }

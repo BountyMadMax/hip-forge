@@ -1,0 +1,42 @@
+package pages
+
+import (
+  "hip-forge/src/models"
+)
+
+templ ZoneInput(hasToken bool) {
+  <select
+    required
+    hx-trigger="click once"
+    hx-get="/zones"
+    hx-swap="innerHTML"
+    hx-target="this"
+    hx-include="previous [name='token']"
+    name="zone"
+    id="zone"
+    class="zone-select w-125 border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0"
+    disabled?={ !hasToken }
+  >
+    @ZoneDefaultOption()
+  </select>
+}
+
+templ ZoneOptions(zones []models.Zone) {
+  @ZoneDefaultOption()
+  for _, zone := range zones {
+    <option
+      value={ zone.ID }
+      hx-trigger="click"
+      hx-get="/records"
+      hx-target="next .record-list"
+      hx-swap="outerHTML"
+      hx-include="closest [name='zone'], previous [name='token']"
+    >
+      { zone.Name }
+    </option>
+  }
+}
+
+templ ZoneDefaultOption() {
+  <option value="">-- Please select a zone --</option>
+}

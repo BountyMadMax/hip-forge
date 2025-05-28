@@ -61,8 +61,14 @@ type BulkUpdateRecordsBody struct {
 	Records []RecordUpdateBody `json:"records"`
 }
 
-func GetRecords(token string, zone_id string) ([]Record, error) {
-	req, err := NewHetznerRequest("GET", fmt.Sprintf("/records?zone_id=%s", zone_id), nil)
+func GetRecords(token string, zone_id *string) ([]Record, error) {
+	url := "/records"
+
+	if zone_id != nil {
+		url = fmt.Sprintf("%s?zone_id=%s", url, *zone_id)
+	}
+
+	req, err := NewHetznerRequest("GET", url, nil)
 
 	if err != nil {
 		return nil, err

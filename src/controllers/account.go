@@ -31,3 +31,9 @@ func AccountToggleTokenInput(c echo.Context) error {
 
 	return views.Render(c, http.StatusOK, pages.AccountTokenInput(token, !hidden))
 }
+
+func AccountTokenChanged(c echo.Context) error {
+	token := c.FormValue("token")
+
+	return views.Render(c, http.StatusOK, pages.ZoneInput(len(token) > 0))
+}

@@ -3,6 +3,7 @@ package views
 import (
 	"context"
 	"net/http"
+	"strconv"
 
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
@@ -28,4 +29,22 @@ func Render(ctx echo.Context, HTTPStatus int, t templ.Component) error {
 	}
 
 	return nil
+}
+
+func ParseBoolWithoutError(str string) bool {
+	result, err := strconv.ParseBool(str)
+
+	if err != nil {
+		return false
+	}
+
+	return result
+}
+
+func IfElse[T any](If bool, Then T, Else T) T {
+	if If {
+		return Then
+	}
+
+	return Else
 }

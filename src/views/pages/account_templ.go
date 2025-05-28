@@ -10,6 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"hip-forge/src/models"
+	"hip-forge/src/views"
 )
 
 func Account(account models.Account) templ.Component {
@@ -40,13 +41,13 @@ func Account(account models.Account) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(account.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 16, Col: 32}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 17, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0 text-center\"></h2><button type=\"submit\" class=\"absolute border-2 top-2 right-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-save\"></i></button></div><div class=\"p-2\"><label class=\"grid grid-rows-1 grid-cols-[min-content_auto] gap-2\"><span class=\"select-none text-nowrap\">Auth-API-Token</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0 text-center\"></h2><button type=\"submit\" class=\"absolute border-2 top-2 right-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-save\"></i></button></div><div class=\"grid grid-rows-2 grid-cols-[min-content_auto] gap-2 p-2\"><label for=\"token\" class=\"text-nowrap\">Auth-API-Token</label><div class=\"ml-26\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -54,15 +55,23 @@ func Account(account models.Account) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</label></div></form><div class=\"flex flex-col gap-2 p-2\"><div class=\"flex justify-end\"><button type=\"button\" class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\" hx-target=\"next .dns-record-list\" hx-post=\"/records\" hx-swap=\"beforeend\"><i class=\"icon-plus\"></i> <span>Domain</span></button></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><label for=\"zone\" class=\"text-nowrap\">Zone</label><div class=\"ml-26\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = DnsRecordTable(account.DNSRecords).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ZoneInput(views.ParseBoolWithoutError(account.Token)).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></li>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div></form><div class=\"flex flex-col gap-2 p-2\"><div class=\"flex justify-end\"><button type=\"button\" class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\" hx-target=\"next .record-list\" hx-post=\"/records\" hx-swap=\"beforeend\"><i class=\"icon-plus\"></i> <span>Domain</span></button></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = RecordTable(account.Records).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></li>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -91,89 +100,61 @@ func AccountTokenInput(token string, hideToken bool) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<span class=\"flex gap-2\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<span class=\"flex gap-2\"><div class=\"w-full\"><input type=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(views.IfElse(hideToken, "password", "text"))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 66, Col: 58}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" placeholder=\"Token\" required name=\"token\" id=\"token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(token)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 71, Col: 21}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" class=\"block w-125 border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0\" hx-post=\"/accounts/token-changed\" hx-trigger=\"input changed throttle:1s\" hx-target=\"next .zone-select\" hx-swap=\"outerHTML\"> <input type=\"hidden\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(hideToken)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 78, Col: 44}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" name=\"hidden\"></div><button type=\"button\" hx-post=\"/accounts/toggle-token-input\" hx-target=\"closest span\" hx-include=\"[name=&#39;token&#39;],[name=&#39;hidden&#39;]\" hx-swap=\"outerHTML\" class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if hideToken {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<span class=\"w-full\"><input type=\"password\" placeholder=\"Token\" required name=\"token\" value=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(token)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 64, Col: 23}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" class=\"w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0\"> <input type=\"hidden\" value=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(hideToken)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 67, Col: 46}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" name=\"hidden\"></span> ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<i class=\"icon-eye\"></i>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<span class=\"w-full\"><input type=\"text\" placeholder=\"Token\" name=\"token\" required value=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(token)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 76, Col: 23}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\" class=\"w-full border-b-2 border-rose-700 focus-visible:border-rose-500 focus:outline-0\"> <input type=\"hidden\" value=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var7 string
-			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(hideToken)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `src/views/pages/account.templ`, Line: 79, Col: 46}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\" name=\"hidden\"></span> ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<i class=\"icon-eye-off\"></i>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<button type=\"button\" hx-post=\"/accounts/toggle-token-input\" hx-target=\"closest span\" hx-include=\"[name=&#39;token&#39;],[name=&#39;hidden&#39;]\" hx-swap=\"outerHTML\" class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		if hideToken {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<i class=\"icon-eye\"></i>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<i class=\"icon-eye-off\"></i>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</button></span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</button></span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
