@@ -31,8 +31,9 @@ type Record struct {
 	Value     string
 	Created   time.Time
 	Updated   time.Time
-	ZoneID    int
+	ZoneID    uint
 	Zone      Zone
-	AccountID int
+	AccountID uint
 	Account   Account
+	Hidden    bool `gorm:"default:true"`
 }

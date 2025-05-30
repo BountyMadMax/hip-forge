@@ -2,13 +2,14 @@ package pages
 
 import (
   "hip-forge/src/models"
+	"gorm.io/gorm"
 )
 
-templ Home(accounts []models.Account) {
-  <div class="w-200 flex flex-col gap-4 py-8 h-fit">
+templ Home(accounts []models.Account, db *gorm.DB) {
+  <div class="w-275 flex flex-col gap-4 py-8 h-fit">
     <div class="flex justify-end">
       <button
-        hx-post="/accounts"
+        hx-post="/accounts/new"
         hx-target="next ul"
         hx-swap="beforeend"
         class="border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1"
@@ -20,7 +21,7 @@ templ Home(accounts []models.Account) {
 
     <ul class="grid gap-4">
       for _, account := range accounts {
-        @Account(account)
+        @Account(account, db)
       }
     </ul>
   </div>

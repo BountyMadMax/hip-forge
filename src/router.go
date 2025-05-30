@@ -14,18 +14,29 @@ func Router(e *echo.Echo) {
 	})
 
 	e.POST("/accounts", func(c echo.Context) error {
-		return controllers.AccountNew(c)
+		return controllers.AccountSave(c)
 	})
 	e.POST("/accounts/new", func(c echo.Context) error {
-		return controllers.AccountCreate(c)
+		return controllers.AccountNew(c)
 	})
 
 	e.POST("/records", func(c echo.Context) error {
 		return controllers.RecordNew(c)
 	})
-
 	e.GET("/records", func(c echo.Context) error {
 		return controllers.Records(c)
+	})
+	e.POST("/records", func(c echo.Context) error {
+		return controllers.RecordSave(c)
+	})
+	e.POST("/records/refresh", func(c echo.Context) error {
+		return controllers.RecordRefresh(c)
+	})
+	e.POST("/records/hide", func(c echo.Context) error {
+		return controllers.RecordHide(c)
+	})
+	e.DELETE("/records", func(c echo.Context) error {
+		return controllers.RecordDelete(c)
 	})
 
 	e.POST("/accounts/toggle-token-input", func(c echo.Context) error {

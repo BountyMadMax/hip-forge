@@ -17,5 +17,5 @@ func HomeIndex(c echo.Context) error {
 
 	db.Find(&accounts)
 
-	return views.Render(c, http.StatusOK, pages.Home(accounts))
+	return views.Render(c, http.StatusOK, pages.Home(accounts, db))
 }

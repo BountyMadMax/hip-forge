@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"hip-forge/src/hetzner/dns_api"
 	"hip-forge/src/models"
 	"hip-forge/src/views"
@@ -18,11 +17,7 @@ func Zones(c echo.Context) error {
 		return views.Render(c, http.StatusBadRequest, pages.ZoneOptions(nil))
 	}
 
-	fmt.Println("Token", token)
-
 	api_zones, err := dns_api.GetZones(token)
-
-	fmt.Println("Zones", api_zones, "Error", err)
 
 	if err != nil {
 		return views.Render(c, http.StatusInternalServerError, pages.ZoneOptions(nil))
@@ -30,16 +25,12 @@ func Zones(c echo.Context) error {
 
 	zones := make([]models.Zone, len(api_zones))
 
-	fmt.Println("NO PROBLEMS?")
-
 	for i, zone := range api_zones {
 		zones[i] = models.Zone{
 			ID:   zone.Id,
 			Name: zone.Name,
 		}
 	}
-
-	fmt.Println("Zones", zones)
 
 	return views.Render(c, http.StatusOK, pages.ZoneOptions(zones))
 }

@@ -9,10 +9,11 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"gorm.io/gorm"
 	"hip-forge/src/models"
 )
 
-func Home(accounts []models.Account) templ.Component {
+func Home(accounts []models.Account, db *gorm.DB) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -33,12 +34,12 @@ func Home(accounts []models.Account) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"w-200 flex flex-col gap-4 py-8 h-fit\"><div class=\"flex justify-end\"><button hx-post=\"/accounts\" hx-target=\"next ul\" hx-swap=\"beforeend\" class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-plus\"></i> <span>Account</span></button></div><ul class=\"grid gap-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"w-275 flex flex-col gap-4 py-8 h-fit\"><div class=\"flex justify-end\"><button hx-post=\"/accounts/new\" hx-target=\"next ul\" hx-swap=\"beforeend\" class=\"border-2 border-rose-700 hover:bg-rose-700 active:bg-rose-900 active:border-rose-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-700 transition duration-75 px-2 rounded cursor-pointer flex items-center gap-1\"><i class=\"icon-plus\"></i> <span>Account</span></button></div><ul class=\"grid gap-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		for _, account := range accounts {
-			templ_7745c5c3_Err = Account(account).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = Account(account, db).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

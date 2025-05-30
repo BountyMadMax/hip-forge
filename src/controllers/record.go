@@ -21,13 +21,13 @@ func Records(c echo.Context) error {
 	zone := c.FormValue("zone")
 
 	if len(zone) == 0 || len(token) == 0 {
-		return views.Render(c, http.StatusBadRequest, pages.RecordRows(nil))
+		return views.Render(c, http.StatusBadRequest, pages.RecordRows(nil, "record-list"))
 	}
 
 	api_records, err := dns_api.GetRecords(token, &zone)
 
 	if err != nil {
-		return views.Render(c, http.StatusInternalServerError, pages.RecordRows(nil))
+		return views.Render(c, http.StatusInternalServerError, pages.RecordRows(nil, "record-list"))
 	}
 
 	records := make([]models.Record, len(api_records))
@@ -37,8 +37,25 @@ func Records(c echo.Context) error {
 			ID:    record.Id,
 			Name:  record.Name,
 			Value: record.Value,
+			Type:  models.RecordType(record.Type),
 		}
 	}
 
-	return views.Render(c, http.StatusOK, pages.RecordRows(records))
+	return views.Render(c, http.StatusOK, pages.RecordRows(records, "record-list"))
+}
+
+func RecordSave(c echo.Context) error {
+	return nil
+}
+
+func RecordRefresh(c echo.Context) error {
+	return nil
+}
+
+func RecordHide(c echo.Context) error {
+	return nil
+}
+
+func RecordDelete(c echo.Context) error {
+	return nil
 }
