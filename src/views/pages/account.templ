@@ -57,9 +57,12 @@ templ Account(account models.Account, db *gorm.DB) {
 
         @RecordTable(account.UnhiddenRecords(db))
       </div>
-      <div>
-        <details>
-          <summary>Hidden records</summary>
+      <div class="p-2">
+        <details class="open:[&_i]:rotate-90">
+          <summary class="select-none flex cursor-pointer">
+            <i class="icon-chevron-right transition-transform duration-100"></i>
+            <h3 class="text-lg">Hidden records</h3>
+          </summary>
           @RecordHiddenTable(account.HiddenRecords(db))
         </details>
       </div>
