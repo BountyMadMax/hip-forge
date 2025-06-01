@@ -68,7 +68,8 @@ func AccountSave(c echo.Context) error {
 
 func AccountToggleTokenInput(c echo.Context) error {
 	token := c.FormValue("token")
-	hidden, err := strconv.ParseBool(c.FormValue("hidden"))
+	hidden, err := strconv.ParseBool(c.FormValue("hidden-token"))
+
 	if err != nil {
 		hidden = true
 	}
